@@ -24,16 +24,8 @@ driver = webdriver.Chrome()
 
 driver.get("https://sslproxies.org/")
 driver.execute_script("return arguments[0].scrollIntoView(true);", WebDriverWait(driver, 20).until(EC.visibility_of_element_located((By.XPATH, "//table[@class='table table-striped table-bordered']//th[contains(., 'IP Address')]"))))
-print("Part 1")
-#test = WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//table[@class='table table-striped table-bordered']//tbody//tr/td[1]")))
-#print(test.get_attribute("innerHTML"))  
-for my_elem in WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//table[@class='table table-striped table-bordered']//tbody//tr/td[1]"))):
-    print(my_elem.get_attribute("innerHTML"))
-    print("my name jeff")
-#ips = [my_elem.get_attribute("innerHTML") for my_elem in WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//table[@class='table table-striped table-bordered']//tbody//tr[@role='row']/td[position() = 1]")))]
-print("Part 2")
-ports = [my_elem.get_attribute("innerHTML") for my_elem in WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//table[@class='table table-striped table-bordered']//tbody//tr[@role='row']/td[position() = 2]")))]
-print("Part 3")
+ips = [my_elem.get_attribute("innerHTML") for my_elem in WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//table[@class='table table-striped table-bordered']//tbody//tr/td[1]")))]
+ports = [my_elem.get_attribute("innerHTML") for my_elem in WebDriverWait(driver, 20).until(EC.visibility_of_all_elements_located((By.XPATH, "//table[@class='table table-striped table-bordered']//tbody//tr/td[2]")))]
 driver.quit()
 
 proxies = []
