@@ -19,8 +19,6 @@ from random_user_agent.user_agent import UserAgent
 from random_user_agent.params import SoftwareName, OperatingSystem
 
 # NEW CODE ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-# TO DO: Add proxy support
-
 # from selenium import webdriver
 # from selenium.common.exceptions import TimeoutException, WebDriverException
 # from selenium.webdriver.chrome.options import Options
@@ -79,6 +77,7 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 # NEW CODE ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # OLD PROXY CODE  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# TO DO: Get user agent working, figure out whats crashing chrome
 
 driver = webdriver.Chrome()
 
@@ -105,12 +104,12 @@ for i in range(0, len(proxies)):
         user_agent =user_agent_rotator.get_random_user_agent()
         print("Init user_agent", user_agent)    
         #options.add_argument('--headless')
-        #options.add_argument('--no-sandbox')
-        #options.add_argument('--window-s ize=1420, 1080')
-        #options.add_argument('--disable-gpu')
-        #options.add_argument(f'user-agent={user_agent}')
+        options.add_argument('--no-sandbox')
+        options.add_argument('--disable-dev-shm-usage')
+        options.add_argument('--disable-gpu')
+        options.add_argument(f'user-agent={user_agent}')
         # Old stuff
-        options.add_argument('--proxy-server=%s' % proxies[i])
+        #ptions.add_argument('--proxy-server=%s' % proxies[i])
         driver = webdriver.Chrome(options)
         driver.get('https://www.whatismyip.com')
         print("My IP", proxies[i])
