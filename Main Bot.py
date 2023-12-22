@@ -133,6 +133,9 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 # OLD PROXY CODE  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 # NO PROXY CODE  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# TODO : Get consistent user agent, parse html correctly (Do wait rather than wait until element renders)
+
 try:
     options = webdriver.ChromeOptions()
     #New Code 
