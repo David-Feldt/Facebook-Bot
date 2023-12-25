@@ -16,7 +16,9 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
 from random_user_agent.user_agent import UserAgent
-from random_user_agent.params import SoftwareName, OperatingSystem
+from random_user_agent.params import SoftwareName, OperatingSystem, HardwareType
+
+from bs4 import BeautifulSoup
 
 # NEW CODE ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 # from selenium import webdriver
@@ -134,14 +136,16 @@ from random_user_agent.params import SoftwareName, OperatingSystem
 
 # NO PROXY CODE  ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-# TODO : Get consistent user agent, parse html correctly (Do wait rather than wait until element renders)
+# TODO : Get consistent user agent, parse html correctly (Do wait rather than wait until element renders), Build CLass for storing data, put into set with CLASS
 
 try:
     options = webdriver.ChromeOptions()
     #New Code 
     software_names = [SoftwareName.CHROME.value]
     operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
+    hardware_types = [HardwareType.COMPUTER.value]
     print("Init software_names", software_names)
+    # Look into hardware types (hardware_types=hardware_types)
     user_agent_rotator = UserAgent(software_names=software_names, operating_system=operating_systems,limit=100)
     print("Init user_agent_rotator", user_agent_rotator)
     user_agent =user_agent_rotator.get_random_user_agent()
@@ -165,7 +169,14 @@ try:
         driver.maximize_window()
         page_html = driver.page_source
         driver.close()
-        with open('output.txt', 'w') as file:
+        # soup = BeautifulSoup(page_html, 'html.parser')
+        # img_url = soup.find('img', class_='img')['src']
+        # title = soup.find('div', class_='native-text').text
+        # price = soup.find('span', class_='f2').text
+        # print(img_url)
+        # print(title)
+        # print(price)
+        with open('output.html', 'w', encoding='utf-8') as file:
             file.write(page_html)
             print("Page HTML saved to output.txt")
 except Exception as e:
