@@ -142,7 +142,8 @@ try:
     options = webdriver.ChromeOptions()
     #New Code 
     software_names = [SoftwareName.CHROME.value]
-    operating_systems = [OperatingSystem.WINDOWS.value, OperatingSystem.LINUX.value]
+    #OperatingSystem.WINDOWS.value,
+    operating_systems = [ OperatingSystem.LINUX.value]
     hardware_types = [HardwareType.COMPUTER.value]
     print("Init software_names", software_names)
     # Look into hardware types (hardware_types=hardware_types)
@@ -157,28 +158,36 @@ try:
     options.add_argument(f'user-agent={user_agent}')
     # Old stuff
     driver = webdriver.Chrome(options)
+    driver.maximize_window()
     driver.get('https://www.facebook.com')
     input()
     #time.sleep(5000)
     driver.get('https://m.facebook.com/marketplace/')
     time_to_wait = 90
-    try:
-        WebDriverWait(driver, time_to_wait).until(EC.presence_of_element_located((By.CLASS_NAME, 'html-renderer')))
-    finally:
-        input()
-        driver.maximize_window()
-        page_html = driver.page_source
-        driver.close()
-        # soup = BeautifulSoup(page_html, 'html.parser')
-        # img_url = soup.find('img', class_='img')['src']
-        # title = soup.find('div', class_='native-text').text
-        # price = soup.find('span', class_='f2').text
-        # print(img_url)
-        # print(title)
-        # print(price)
-        with open('output.html', 'w', encoding='utf-8') as file:
-            file.write(page_html)
-            print("Page HTML saved to output.txt")
+    #WebDriverWait(driver, time_to_wait).until(EC.presence_of_element_located((By.CLASS_NAME, 'html-renderer')))
+    input()
+    #divs = driver.find_elements_by_class_name('f3')
+    divs = driver.find_elements(By.CLASS_NAME, "f3")
+    divs[-1].click()
+
+    """
+    wait = WebDriverWait(driver, 10)
+    last_div = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'f3')))
+    last_div.click()
+    """
+    input()
+    page_html = driver.page_source
+    driver.close()
+    # soup = BeautifulSoup(page_html, 'html.parser')
+    # img_url = soup.find('img', class_='img')['src']
+    # title = soup.find('div', class_='native-text').text
+    # price = soup.find('span', class_='f2').text
+    # print(img_url)
+    # print(title)
+    # print(price)
+    with open('output.html', 'w', encoding='utf-8') as file:
+        file.write(page_html)
+        print("Page HTML saved to output.html")
 except Exception as e:
         print("Exception: ", str(e))
         driver.quit()
