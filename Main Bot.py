@@ -17,6 +17,8 @@ from selenium.common.exceptions import TimeoutException
 
 from random_user_agent.user_agent import UserAgent
 from random_user_agent.params import SoftwareName, OperatingSystem, HardwareType
+from selenium.webdriver.common.keys import Keys
+
 
 from bs4 import BeautifulSoup
 
@@ -167,15 +169,25 @@ try:
     #WebDriverWait(driver, time_to_wait).until(EC.presence_of_element_located((By.CLASS_NAME, 'html-renderer')))
     input()
     #divs = driver.find_elements_by_class_name('f3')
-    divs = driver.find_elements(By.CLASS_NAME, "f3")
-    divs[-1].click()
+    divs = driver.find_elements(By.CLASS_NAME, "f3")[-1]
+    #divs[-1].click()
+    #location = divs.location
+    #print("Element Location:", location)
 
-    """
-    wait = WebDriverWait(driver, 10)
-    last_div = wait.until(EC.element_to_be_clickable((By.CLASS_NAME, 'f3')))
-    last_div.click()
-    """
+    driver.execute_script("arguments[0].click();", divs)
+
+    #wait = WebDriverWait(driver, 10)
+    #last_div = wait.until(EC.element_to_be_clickable(divs))
+    #last_div.click()
+    
     input()
+    serach_bar = driver.find_element(By.CLASS_NAME, "internal-input")
+
+    serach_bar.send_keys('Gameboy')
+    input()
+    serach_bar.send_keys(Keys.ENTER)
+    input()
+
     page_html = driver.page_source
     driver.close()
     # soup = BeautifulSoup(page_html, 'html.parser')
